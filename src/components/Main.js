@@ -108,7 +108,7 @@ export default class Main extends React.Component {
             if (this.state.bulletY[index] > 0) {
                 return (
                     <div style={{ position: 'absolute', left: left, top: top }}>
-                        {top}
+                        *
                     </div>
                 )
             }
@@ -122,7 +122,7 @@ export default class Main extends React.Component {
             if (this.state.enemiesY[index] < 590) {
                 return (
                     <div style={{ position: 'absolute', left: left, top: top }}>
-                        {top}
+                        [-]
                     </div>
                 )
             }
