@@ -9,40 +9,48 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background-color: yellow;
+    background-color: darkgray;
     width: 100%;
     height: 90%;
 }
 
-.game {
+.gameRegion {
     display: flex;
     flex-direction: column;
     position: relative;
     justify-content: space-between;
-    background-color: red;
-    width: 50%;
+    background-color:grey;
+    background-image:url("../assets/images/background.png");  
+    width: 100%;
+    max-width: 50rem;
     height: 100%;
 }
 
 .playerRegion {
     position: relative;
-    background-color: aqua;
     width: 100%;
     height: 6%;
 }
 
 .player {
-    position: absolute;
-    top: 30%;
-    left: 0px;
-    background-color: blueviolet;
+    position: absolute;     
+}
+
+.playerImage {
+    height: 30px;
 }
 
 .controls {
     display: flex;
-    justify-content: space-around;
-    align-items: flex-start;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
     background-color: coral;
     width: 20%;
     height: 100%;
+}
+
+.playButton {
+    width: 80%;
+    margin: 1rem;
 }

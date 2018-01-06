@@ -6,8 +6,9 @@ export default class Header extends React.Component {
         return (
             <div className="titleBar">
                 <div className="title">
-                    <h3>Space Shooter</h3>
+                    <h3>Sky Shooter</h3>
                 </div>
+                {this.props.children}
             </div>
         );
     }

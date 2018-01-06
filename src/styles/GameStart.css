@@ -1,0 +1,19 @@
+.main{
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+}
+
+.content{
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    background-image:url("../assets/images/background.png");
+    width: 100vw;
+    height: 92%;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}

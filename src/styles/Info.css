@@ -1,0 +1,20 @@
+.info {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    font-size: 1.2rem;
+    z-index: 10;
+    color: whitesmoke;
+    background-color: #604860;
+    top: 0px;
+    right: 0px;
+}
+
+.playerImage {
+    height: 30px;
+}
+
+.infoLives {
+    display: flex;
+    display: -webkit-flex;
+}
