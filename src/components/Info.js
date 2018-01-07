@@ -1,11 +1,21 @@
 import React from 'react';
+import Dialog from 'material-ui/Dialog';
 import '../styles/Info.css';
 
+const message = (
+    <div>
+        <p> Press 'Spacebar' to release bullets</p>
+        <p> Press 'B' to release blaster</p>
+        <p> Press 'Enter' to Play/Pause</p>
+        <p> Press 'Esc' to close this dialog </p>
+    </div>
+);
 
 export default class Info extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            open: true,
             score: this.props.score,
             lives: this.props.lives,
             livesImage: this.showLives(this.props.lives)
@@ -23,12 +33,18 @@ export default class Info extends React.Component {
         }
     }
 
+    handleClose = () => {
+        this.setState({
+            open: false,
+        });
+    };
+
     showLives(lives) {
         let jsx = [];
         for (let i = 0; i < lives; i++) {
             jsx.push((
                 <div>
-                    <img src="assets/images/spaceship.png" className="playerImage" />
+                    <img src="assets/images/spaceship.png" className="playerImage" alt="P" />
                 </div>
             ));
         }
@@ -37,9 +53,18 @@ export default class Info extends React.Component {
 
     render() {
         return (
-            <div className="info">
-                <div className="infoChild">Score: {this.state.score} </div>
+            <div className="info" >
+                <div className="infoChild">Score: {this.state.score}</div>
                 <div className="infoLives"> {this.state.livesImage} </div>
+
+                <Dialog
+                    title="Controls"
+                    modal={false}
+                    open={this.state.open}
+                    onRequestClose={this.handleClose}
+                >
+                    {message}
+                </Dialog>
             </div>
         )
     }

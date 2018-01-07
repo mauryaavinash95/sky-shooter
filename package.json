@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "async": "^2.6.0",
+    "localforage": "^1.5.5",
     "material-ui": "^0.20.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",

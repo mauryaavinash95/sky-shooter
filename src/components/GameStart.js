@@ -1,5 +1,6 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
+import localforage from 'localforage';
 import TextField from 'material-ui/TextField';
 import Header from './Header';
 import FlatButton from 'material-ui/FlatButton';
@@ -34,8 +35,14 @@ export default class GameStart extends React.Component {
             this.setState({
                 errorText: ""
             });
-            localStorage.setItem('playerName', this.state.name);
-            browserHistory.push("/gameplay")
+            localforage.setItem('playerName', this.state.name).then((value) => {
+                console.log("Value set in localforage: ", value);
+                browserHistory.push("/gameplay")
+            }).catch((err) => {
+                console.log("Error while storing name");
+                this.setState({ errorText: err });
+            })
+
         } else {
             this.setState({
                 errorText: "Please enter your name"
@@ -52,7 +59,7 @@ export default class GameStart extends React.Component {
                         floatingLabelStyle={styles.floatingLabelStyle}
                         floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
                         errorText={this.state.errorText}
-                        onChange={(event) => { this.setState({ name: event.target.value }) }}
+                        onChange={(event) => { this.setState({ name: event.target.value.trim() }) }}
                     />
                     <br />
                     <FlatButton label="Enter" onClick={this.submit.bind(this)} />

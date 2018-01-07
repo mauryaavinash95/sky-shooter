@@ -1,20 +1,50 @@
 import React, { Component } from 'react';
-import GamePlay from './GamePlay';
-
-import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+import { browserHistory } from 'react-router';
+import localforage from 'localforage';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
+// import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+// import getMuiTheme from 'material-ui/styles/getMuiTheme';
+// const authRoutes = ['/gameplay', '/gameover'];
+// const publicRoutes = ['/'];
 
 class App extends Component {
-  render() {
-    return (
-      <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
-        <div className="container">
-          {this.props.children}
-        </div>
-      </MuiThemeProvider>
-    );
-  }
+	constructor(props) {
+		super(props);
+		this.state = {
+
+		}
+		this.checkLogin();
+	}
+
+	checkLogin() {
+		let currentLocation = this.props.router.getCurrentLocation().pathname;
+		console.log(currentLocation);
+		localforage.getItem('playerName')
+			.then((value) => {
+				if (value !== null && value !== "") {
+					console.log("PlayerName set in storage as: ", value);
+					if (currentLocation === "/") {
+						browserHistory.push("/gameplay");
+					}
+				}
+			}).catch((err) => {
+				console.log("PlayerName not set");
+				if (currentLocation === "/gameplay") {
+					browserHistory.push("/");
+				}
+			})
+	}
+
+	render() {
+		// muiTheme={getMuiTheme(darkBaseTheme)}
+		return (
+			<MuiThemeProvider >
+				<div className="container">
+					{this.props.children}
+				</div>
+			</MuiThemeProvider>
+		);
+	}
 }
 
 export default App;

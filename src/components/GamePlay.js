@@ -1,8 +1,8 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
+import Snackbar from 'material-ui/Snackbar';
+import localforage from 'localforage';
 import Header from './Header';
-import Instructions from './Instructions';
-import Bullet from './Bullet';
 import Info from './Info';
 import '../styles/Main.css';
 
@@ -31,19 +31,30 @@ export default class Main extends React.Component {
             score: 0,
             lives: 3,
             gameOver: false,
+            snackBarOpen: true,
             numberOfBlasters,
             shipImage: 'spaceship.png',
+            playerName: null,
         }
 
     }
 
     checkPlayerName() {
         console.log("In CheckPlayerName");
-        let playerName = localStorage.getItem('playerName');
-        if (!playerName || playerName === null || playerName === "") {
-            console.log("Invalid PlayerName");
-            browserHistory.push("/");
-        }
+        localforage.getItem('playerName')
+            .then((playerName) => {
+                if (!playerName || playerName === null || playerName === "") {
+                    console.log("Invalid PlayerName");
+                    browserHistory.push("/");
+                } else {
+                    this.setState({ playerName });
+                }
+            })
+            .catch((err) => {
+                console.log("Error while getting playerName : ", err);
+                browserHistory.push("/");
+            });
+
     }
 
     componentDidMount() {
@@ -168,8 +179,8 @@ export default class Main extends React.Component {
 
     createBullet(index, left, top) {
         return (
-            <div key={`bullet_${index}`} style={{ position: 'absolute', left, top, alignContent: 'center' }}>
-                <img src="assets/images/bullet.png" />
+            <div key={`bullet_${index}`} style={{ position: 'absolute', left, top, alignContent: 'center' }} >
+                <img src="assets/images/bullet.png" alt="b" />
             </div>
         )
     }
@@ -181,7 +192,8 @@ export default class Main extends React.Component {
             let bulletYIndex = this.state.bulletY[index];
             if (bulletYIndex > 0) {
                 return this.createBullet(index, left, top);
-                // return <Bullet index={index} left={left} top={top} />
+            } else {
+                return undefined;
             }
         }, this);
     }
@@ -196,7 +208,7 @@ export default class Main extends React.Component {
                 if (aliveEnemies[index] === 1) {
                     return (
                         <div key={`enemy_${index}`} style={{ position: 'absolute', left: left, top: top, alignContent: 'center' }}>
-                            <img src="assets/images/enemy.png" width="50px" />
+                            <img src="assets/images/enemy.png" width="50px" alt='e' />
                         </div>
                     )
                 }
@@ -241,10 +253,11 @@ export default class Main extends React.Component {
         this.setState({
             shipImage: img
         })
-        if (blast)
+        if (blast) {
             setTimeout(() => {
                 this.showShipBlast(false);
             }, 1500)
+        }
 
     }
 
@@ -253,6 +266,16 @@ export default class Main extends React.Component {
         if (!this.state.gameOver) {
             this.setState({
                 pause: !this.state.pause,
+            }, () => {
+                if (this.state.pause) {
+                    this.setState({
+                        snackBarOpen: true,
+                    })
+                } else {
+                    this.setState({
+                        snackBarOpen: false,
+                    })
+                }
             })
         } else {
             this.setState({
@@ -276,7 +299,7 @@ export default class Main extends React.Component {
     releaseBlaster() {
         let { numberOfBlasters } = this.state;
         if (numberOfBlasters > 0) {
-            let { left, right, width } = this.getBoundaries();
+            let { width } = this.getBoundaries();
             width = width - 30;
             for (let i = 0; i < width; i += 10) {
                 this.generateBullet(i);
@@ -309,7 +332,7 @@ export default class Main extends React.Component {
     render() {
         return (
             <div className="mainContainer" ref="mainContainer" tabIndex="0" onKeyPress={this.keyPress.bind(this)}>
-                <Header />
+                <Header playerName={this.state.playerName} />
                 <div className="main">
                     <div className="gameRegion" ref="gameRegion" onMouseMove={this.mouseMove.bind(this)}>
                         <div style={{ position: "relative" }}>
@@ -319,9 +342,20 @@ export default class Main extends React.Component {
                         </div>
                         <div ref="playerRegion" className="playerRegion" >
                             <div ref="player" className="player" style={{ alignContent: 'center', left: (this.state.playerStyle.left + "px").toString() }}>
-                                <img src={"assets/images/" + this.state.shipImage} className="playerImage" />
+                                <img src={"assets/images/" + this.state.shipImage} className="playerImage" alt="P" />
                             </div>
                         </div>
+                        <Snackbar
+                            open={this.state.snackBarOpen}
+                            message="Press 'Enter' to Play/Pause"
+                            autoHideDuration={10000}
+                            onRequestClose={
+                                () => {
+                                    this.setState({
+                                        snackBarOpen: false,
+                                    });
+                                }}
+                        />
                     </div>
                 </div>
             </div>
