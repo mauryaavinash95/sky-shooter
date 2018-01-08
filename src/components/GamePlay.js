@@ -31,7 +31,7 @@ export default class Main extends React.Component {
             score: 0,
             lives: 3,
             gameOver: false,
-            snackBarOpen: true,
+            snackBarOpen: false,
             numberOfBlasters,
             shipImage: 'spaceship.png',
             playerName: null,
@@ -167,6 +167,7 @@ export default class Main extends React.Component {
                     lives--;
                     this.setState({
                         lives: lives,
+                        snackBarOpen: true,
                     });
                     if (lives <= 0) {
                         this.gameOver();
@@ -266,16 +267,6 @@ export default class Main extends React.Component {
         if (!this.state.gameOver) {
             this.setState({
                 pause: !this.state.pause,
-            }, () => {
-                if (this.state.pause) {
-                    this.setState({
-                        snackBarOpen: true,
-                    })
-                } else {
-                    this.setState({
-                        snackBarOpen: false,
-                    })
-                }
             })
         } else {
             this.setState({
@@ -314,6 +305,7 @@ export default class Main extends React.Component {
     }
 
     keyPress(event) {
+        this.setState({ snackBarOpen: false });
         if (event.which === 13) {
             // SpaceBar was pressed
             this.gamePause();
@@ -336,7 +328,7 @@ export default class Main extends React.Component {
                 <div className="main">
                     <div className="gameRegion" ref="gameRegion" onMouseMove={this.mouseMove.bind(this)}>
                         <div style={{ position: "relative" }}>
-                            <Info score={this.state.score} lives={this.state.lives} />
+                            <Info score={this.state.score} lives={this.state.lives} pause={this.state.pause} blasters={this.state.numberOfBlasters} />
                             {this.renderEnemies()}
                             {this.renderBullets()}
                         </div>
@@ -347,7 +339,7 @@ export default class Main extends React.Component {
                         </div>
                         <Snackbar
                             open={this.state.snackBarOpen}
-                            message="Press 'Enter' to Play/Pause"
+                            message="Spaceship Blast"
                             autoHideDuration={10000}
                             onRequestClose={
                                 () => {

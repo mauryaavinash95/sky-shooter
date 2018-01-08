@@ -1,13 +1,13 @@
 .info {
     position: absolute;
-    display: flex;
-    flex-direction: column;
+    /* display: flex;
+    flex-direction: column; */
     font-size: 1.2rem;
     z-index: 10;
     color: whitesmoke;
     background-color: #604860;
-    top: 0px;
-    right: 0px;
+    /* top: 0px;
+    right: 0px; */
 }
 
 .playerImage {
@@ -17,4 +17,30 @@
 .infoLives {
     display: flex;
     display: -webkit-flex;
+}
+
+.leftContent {
+    display: flex;
+    display: -webkit-flex;
+    position: absolute;
+    flex-direction: column;
+    font-size: 1.2rem;
+    z-index: 10;
+    color: whitesmoke;
+    background-color: #604860;
+    top: 0px;
+    left: 0px;
+}
+
+.rightContent {
+     display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    position: absolute;
+    font-size: 1.2rem;
+    z-index: 10;
+    color: whitesmoke;
+    background-color: #604860;
+    top: 0px;
+    right: 0px;
 }
