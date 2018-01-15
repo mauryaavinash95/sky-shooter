@@ -5,6 +5,7 @@ import '../styles/Info.css';
 const message = (
     <div>
         <p> Press 'Spacebar' to release bullets</p>
+        <p> Use Mouse to move the Spaceship </p>
         <p> Press 'B' to release blaster</p>
         <p> Press 'Enter' to Play/Pause</p>
         <p> Press 'Esc' to close this dialog </p>
@@ -43,11 +44,17 @@ export default class Info extends React.Component {
         });
     };
 
+    showInfo() {
+        this.setState({
+            open: true,
+        })
+    }
+
     showLives(lives) {
         let jsx = [];
         for (let i = 0; i < lives; i++) {
             jsx.push((
-                <div>
+                <div key={"lives_" + i}>
                     <img src="assets/images/spaceship.png" className="playerImage" alt="P" />
                 </div>
             ));
@@ -59,7 +66,12 @@ export default class Info extends React.Component {
         return (
             <div >
                 <div className="leftContent">
-                    <div className="infoChild">Score: {this.state.score}</div>
+                    <div className="infoChild">
+                        Score: {this.state.score}
+                        <span onClick={this.showInfo.bind(this)} >
+                            <img src="assets/images/infoIcon.svg" alt="i" className="showInfo" data-toggle="tooltip" title="Click for controls" />
+                        </span>
+                    </div>
                     <div className="infoChild">Blasters : {this.state.blasters}</div>
                 </div>
                 <div className="rightContent">

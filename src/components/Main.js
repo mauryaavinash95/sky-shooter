@@ -18,11 +18,11 @@ class App extends Component {
 
 	checkLogin() {
 		let currentLocation = this.props.router.getCurrentLocation().pathname;
-		console.log(currentLocation);
+		// console.log(currentLocation);
 		localforage.getItem('playerName')
 			.then((value) => {
 				if (value !== null && value !== "") {
-					console.log("PlayerName set in storage as: ", value);
+					// console.log("PlayerName set in storage as: ", value);
 					if (currentLocation === "/") {
 						browserHistory.push("/gameplay");
 					}
@@ -38,8 +38,8 @@ class App extends Component {
 	render() {
 		// muiTheme={getMuiTheme(darkBaseTheme)}
 		return (
-			<MuiThemeProvider >
-				<div className="container">
+			<MuiThemeProvider key="themeProvider">
+				<div className="container" key="container">
 					{this.props.children}
 				</div>
 			</MuiThemeProvider>

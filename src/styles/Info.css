@@ -33,7 +33,7 @@
 }
 
 .rightContent {
-     display: flex;
+    display: flex;
     display: -webkit-flex;
     flex-direction: column;
     position: absolute;
@@ -43,4 +43,9 @@
     background-color: #604860;
     top: 0px;
     right: 0px;
+}
+
+.showInfo{
+    margin-left: 0.3rem;
+    margin-top: 0.2rem;
 }

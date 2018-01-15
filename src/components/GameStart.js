@@ -30,7 +30,8 @@ export default class GameStart extends React.Component {
             errorText: ""
         }
     }
-    submit() {
+    submit(e) {
+        e.preventDefault();
         if (this.state.name !== null && this.state.name !== "") {
             this.setState({
                 errorText: ""
@@ -54,15 +55,17 @@ export default class GameStart extends React.Component {
             <div className="main">
                 <Header />
                 <div className="content">
-                    <TextField
-                        floatingLabelText="Name"
-                        floatingLabelStyle={styles.floatingLabelStyle}
-                        floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-                        errorText={this.state.errorText}
-                        onChange={(event) => { this.setState({ name: event.target.value.trim() }) }}
-                    />
-                    <br />
-                    <FlatButton label="Enter" onClick={this.submit.bind(this)} />
+                    <form onSubmit={this.submit.bind(this)}>
+                        <TextField
+                            floatingLabelText="Name"
+                            floatingLabelStyle={styles.floatingLabelStyle}
+                            floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                            errorText={this.state.errorText}
+                            onChange={(event) => { this.setState({ name: event.target.value.trim() }) }}
+                        />
+                        <br />
+                        <FlatButton label="Enter" onClick={this.submit.bind(this)} />
+                    </form>
                 </div>
             </div>
         )

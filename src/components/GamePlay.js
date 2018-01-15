@@ -40,7 +40,7 @@ export default class Main extends React.Component {
     }
 
     checkPlayerName() {
-        console.log("In CheckPlayerName");
+        // console.log("In CheckPlayerName");
         localforage.getItem('playerName')
             .then((playerName) => {
                 if (!playerName || playerName === null || playerName === "") {
@@ -141,7 +141,7 @@ export default class Main extends React.Component {
                         bulletY[i] = -bulletSpeedSize;
                         enemiesY[j] = this.state.bottom + enemiesSpeedSize;
                         aliveEnemies[j] = 0;
-                        console.log(`Enemy ${i} dying`);
+                        // console.log(`Enemy ${i} dying`);
                         enemyCount--;
                         score++;
                     }
@@ -213,16 +213,6 @@ export default class Main extends React.Component {
                         </div>
                     )
                 }
-                // else if (aliveEnemies[index] === 0) {
-                //     let { enemiesY } = this.state;
-                //     return (
-                //         <div key={`enemy_${index}`} style={{ position: 'absolute', left: left, top: top, alignContent: 'center' }}>
-                //             <img src="assets/images/blast.gif" width="50px" />
-                //         </div>
-                //     )
-                //     enemiesY[index] = this.state.bottom + enemiesSpeedSize;
-                //     this.setState({ enemiesY });
-                // }
             }
             else if (aliveEnemies[index] === 1 && enemiesYIndex >= bottom) {
                 aliveEnemies[index] = 0;
@@ -327,8 +317,8 @@ export default class Main extends React.Component {
                 <Header playerName={this.state.playerName} />
                 <div className="main">
                     <div className="gameRegion" ref="gameRegion" onMouseMove={this.mouseMove.bind(this)}>
-                        <div style={{ position: "relative" }}>
-                            <Info score={this.state.score} lives={this.state.lives} pause={this.state.pause} blasters={this.state.numberOfBlasters} />
+                        <div key="gameRegionDiv" style={{ position: "relative" }}>
+                            <Info key="infoComponent" score={this.state.score} lives={this.state.lives} pause={this.state.pause} blasters={this.state.numberOfBlasters} />
                             {this.renderEnemies()}
                             {this.renderBullets()}
                         </div>
